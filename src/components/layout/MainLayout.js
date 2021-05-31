@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Categories from "../category/Categories";
 import Posts from "../post/Posts";
 import { Redirect } from "react-router-dom";
@@ -17,12 +17,19 @@ import {
 } from "reactstrap";
 import axios from "axios";
 
-const MainLayout = ({ authorized }) => {
+const MainLayout = ({ setIsLoggedIn }) => {
   const [modal, setModal] = useState(false);
   const [categoriesData, setCategoriesData] = useState([]);
   const [singleCategoryData, setSingleCategoryData] = useState({
     name: "",
   });
+
+  useEffect(() => {
+    let clientData = localStorage.getItem("clientData");
+    if (clientData) {
+      setIsLoggedIn(true);
+    }
+  }, []);
   const toggle = () => setModal(!modal);
   const { name } = singleCategoryData;
 
@@ -49,52 +56,58 @@ const MainLayout = ({ authorized }) => {
   };
 
   return (
-    <Row className="mt-4">
-      <Modal isOpen={modal} toggle={toggle}>
-        <ModalHeader toggle={toggle}>Add Category</ModalHeader>
-        <ModalBody>
-          <Form inline>
-            <FormGroup>
-              <Label for="name">Name</Label>
-              <Input
-                type="text"
-                name="name"
-                id="name"
-                value={name}
-                onChange={(e) =>
-                  setSingleCategoryData({
-                    ...singleCategoryData,
-                    name: e.target.value,
-                  })
-                }
-                placeholder="Enter category name"
-              />
-            </FormGroup>
-          </Form>
-        </ModalBody>
-        <ModalFooter>
-          <Button color="primary" onClick={createCategory}>
-            Submit
-          </Button>
-          <Button color="secondary" onClick={toggle}>
-            Cancel
-          </Button>
-        </ModalFooter>
-      </Modal>
-      <Col md={3}>
-        <Button color="danger" onClick={toggle}>
-          Add Category
-        </Button>
+    <div className="dashboardDesign">
+      <Row>
+        <Modal isOpen={modal} toggle={toggle}>
+          <ModalHeader toggle={toggle}>Add Category</ModalHeader>
+          <ModalBody>
+            <Form inline>
+              <FormGroup>
+                <Label for="name">Name</Label>
+                <Input
+                  type="text"
+                  name="name"
+                  id="name"
+                  value={name}
+                  onChange={(e) =>
+                    setSingleCategoryData({
+                      ...singleCategoryData,
+                      name: e.target.value,
+                    })
+                  }
+                  placeholder="Enter category name"
+                />
+              </FormGroup>
+            </Form>
+          </ModalBody>
+          <ModalFooter>
+            <Button color="primary" onClick={createCategory}>
+              Submit
+            </Button>
+            <Button color="secondary" onClick={toggle}>
+              Cancel
+            </Button>
+          </ModalFooter>
+        </Modal>
 
-        <Categories
-          categoriesData={categoriesData}
-          setCategoriesData={(data) => setCategoriesData(data)}
-        />
-      </Col>
-      <Col md={8}>
-        <Posts />
-      </Col>
-    </Row>
+        <Col md={3}>
+          <div className="inside">
+            <Button className="loginBtn" onClick={toggle}>
+              Add Category
+            </Button>
+
+            <Categories
+              categoriesData={categoriesData}
+              setCategoriesData={(data) => setCategoriesData(data)}
+            />
+          </div>
+        </Col>
+
+        <Col md={9}>
+          <Posts />
+        </Col>
+      </Row>
+    </div>
   );
 };
 

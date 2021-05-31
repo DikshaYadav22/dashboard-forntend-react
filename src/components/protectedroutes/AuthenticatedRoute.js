@@ -7,7 +7,7 @@ const AuthenticatedRoute = ({ component: Component, ...rest }) => {
       {...rest}
       render={(props) =>
         localStorage.getItem("clientData") ? (
-          <Component {...props} />
+          <Component />
         ) : (
           <Redirect to={{ pathname: "/login" }} />
         )

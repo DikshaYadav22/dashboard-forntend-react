@@ -3,13 +3,15 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import {
   Card,
-  CardTitle,
+  Table,
   CardBody,
   Form,
   FormGroup,
   Label,
   Input,
   Button,
+  Jumbotron,
+  Container,
 } from "reactstrap";
 
 const Post = () => {
@@ -68,16 +70,28 @@ const Post = () => {
 
   return (
     <div>
-      <Card>
-        <CardTitle>
-          <h3>Title</h3>
-          {title}
-        </CardTitle>
-        <CardBody>
-          <h3>Content:</h3>
-          {body}
-        </CardBody>
-      </Card>
+      <h2 className="text-center mt-3">Post Data</h2>
+      <Table striped className="table">
+        <thead>
+          <tr>
+            <th>
+              <h3 className="display-6">Title</h3>
+            </th>
+            <th>
+              <h3 className="display-6">Content:</h3>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td> {title}</td>
+            <td>
+              <p className="lead">{body}</p>
+            </td>
+          </tr>
+        </tbody>
+      </Table>
+
       <Card>
         <CardBody>
           <Form>

@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import axios from "axios";
-import { Card, CardTitle } from "reactstrap";
+import { Row, Col, Card, CardTitle } from "reactstrap";
 
 const Categories = ({ categoriesData, setCategoriesData }) => {
   useEffect(() => {
@@ -21,11 +21,17 @@ const Categories = ({ categoriesData, setCategoriesData }) => {
   };
   const renderCategories = () => {
     return (
-      <Card className="mt-3 p-3">
-        {categoriesData.map((category, index) => {
-          return <CardTitle key={index}>{category.name}</CardTitle>;
-        })}
-      </Card>
+      <Row>
+        <Col>
+          {categoriesData.map((category, index) => {
+            return (
+              <Card className="mt-3 p-2">
+                <CardTitle key={index}>{category.name}</CardTitle>
+              </Card>
+            );
+          })}
+        </Col>
+      </Row>
     );
   };
   return <>{categoriesData.length > 0 ? renderCategories() : ""}</>;

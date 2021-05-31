@@ -34,7 +34,7 @@ const Posts = () => {
           <Row>
             <Col>
               <Card>
-                <CardTitle>
+                <CardTitle className="p-2">
                   <Link to={`/post/${post.id}`}>{post.title}</Link>
                 </CardTitle>
               </Card>

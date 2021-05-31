@@ -22,6 +22,7 @@ const Login = () => {
         type: res.data.token_type,
       };
       localStorage.setItem("clientData", JSON.stringify(userData));
+      history.push("/");
 
       setLoginData({
         email: "",
@@ -31,13 +32,11 @@ const Login = () => {
       console.log(res.data);
     }
   };
-  if (localStorage.getItem("clientData")) {
-    history.push("/");
-  }
 
   return (
-    <div className="mt-5">
-      <Form>
+    <div className="mainDesign">
+      <h1 className="titleDesgin">Sign In</h1>
+      <Form className="login-design">
         <FormGroup>
           <Label for="email">Email</Label>
           <Input
@@ -48,7 +47,7 @@ const Login = () => {
             }
             name="email"
             id="email"
-            placeholder="with a placeholder"
+            placeholder="Enter email"
           />
         </FormGroup>
         <FormGroup>
@@ -61,13 +60,23 @@ const Login = () => {
               setLoginData({ ...loginData, password: e.target.value })
             }
             id="examplePassword"
-            placeholder="password placeholder"
+            placeholder="Enter Password"
           />
         </FormGroup>
 
-        <Button onClick={loginUser} color="success">
+        <FormGroup>
+          <Input type="checkbox" className="ml-3" />
+          <Label for="remember" className="ml-5 font-weight-normal">
+            Remember me
+          </Label>
+        </FormGroup>
+
+        <Button onClick={loginUser} className="loginBtn ">
           Login
         </Button>
+        <div className="text-right font-weight-normal p-3">
+          <a href="#">Forgot Password?</a>
+        </div>
       </Form>
     </div>
   );

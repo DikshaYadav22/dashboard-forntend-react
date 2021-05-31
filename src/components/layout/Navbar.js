@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Collapse,
   Navbar,
@@ -10,7 +10,7 @@ import {
 } from "reactstrap";
 import { Link, Redirect } from "react-router-dom";
 
-const NavBar = () => {
+const NavBar = ({ isLoggedIn }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggle = () => setIsOpen(!isOpen);
@@ -25,7 +25,7 @@ const NavBar = () => {
             <NavItem>
               <Link to="/">Home</Link>
             </NavItem>
-            {!localStorage.getItem("clientData") ? (
+            {!isLoggedIn ? (
               <>
                 <NavItem>
                   <Link to="/login">Login</Link>

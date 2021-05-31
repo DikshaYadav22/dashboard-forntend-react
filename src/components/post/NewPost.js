@@ -12,7 +12,7 @@ const NewPost = () => {
   });
 
   const [categoriesData, setCategoriesData] = useState([]);
-  let { title, body } = postsData;
+  let { title, body, category_id } = postsData;
 
   useEffect(() => {
     getCategories();
@@ -92,7 +92,16 @@ const NewPost = () => {
             {categoriesData.length > 0
               ? categoriesData.map((category, index) => {
                   return (
-                    <option key={index} value={category.id}>
+                    <option
+                      key={index}
+                      onChange={(e) =>
+                        setPostsData({
+                          ...postsData,
+                          category_id: e.target.value,
+                        })
+                      }
+                      value={category.id}
+                    >
                       {category.name}
                     </option>
                   );

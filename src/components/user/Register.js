@@ -24,8 +24,9 @@ const Register = () => {
     history.push("/login");
   };
   return (
-    <div className="mt-5">
-      <Form>
+    <div className="mainDesign">
+      <h1 className="titleDesgin">Sign Up</h1>
+      <Form className="login-design">
         <FormGroup>
           <Label for="name">Name</Label>
           <Input
@@ -64,7 +65,7 @@ const Register = () => {
           />
         </FormGroup>
 
-        <Button onClick={submitUserData} color="info">
+        <Button onClick={submitUserData} className="loginBtn">
           Register
         </Button>
       </Form>
