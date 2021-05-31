@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
-import { Row, Col, Card, CardTitle, CardBody } from "reactstrap";
+import { Row, Col, Card, CardTitle } from "reactstrap";
 import { Link } from "react-router-dom";
 
 const Posts = () => {

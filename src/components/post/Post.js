@@ -15,7 +15,10 @@ import {
 const Post = () => {
   const { id } = useParams();
   const [postData, setPostData] = useState({});
+  const [commentsData, setCommentsData] = useState([]);
+
   const [singleReplyData, setSingleReplyData] = useState("");
+
   useEffect(() => {
     getPost();
   }, []);
@@ -36,7 +39,9 @@ const Post = () => {
     });
     if (res.data) {
       if (!res.data.error) {
-        setSingleReplyData(res.data.data);
+        let tempData = [...commentsData, postData];
+        setCommentsData(tempData);
+        setSingleReplyData("");
       }
     } else {
       console.log(res.data);
@@ -54,6 +59,7 @@ const Post = () => {
     if (res.data) {
       if (!res.data.error) {
         setPostData(res.data.data);
+        setCommentsData(res.data.comment);
       }
     } else {
       console.log(res.data);
@@ -91,6 +97,13 @@ const Post = () => {
             </FormGroup>
           </Form>
         </CardBody>
+      </Card>
+      <Card>
+        {commentsData.length > 0
+          ? commentsData.map((data, index) => {
+              return <CardBody>{data.comment}</CardBody>;
+            })
+          : []}
       </Card>
     </div>
   );

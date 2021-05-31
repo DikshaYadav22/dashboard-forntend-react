@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Categories from "../category/Categories";
 import Posts from "../post/Posts";
-import { BrowserRouter as Router, Link } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 import {
   Button,
   Form,
@@ -17,7 +17,7 @@ import {
 } from "reactstrap";
 import axios from "axios";
 
-const MainLayout = () => {
+const MainLayout = ({ authorized }) => {
   const [modal, setModal] = useState(false);
   const [categoriesData, setCategoriesData] = useState([]);
   const [singleCategoryData, setSingleCategoryData] = useState({
@@ -47,6 +47,7 @@ const MainLayout = () => {
       });
     }
   };
+
   return (
     <Row className="mt-4">
       <Modal isOpen={modal} toggle={toggle}>

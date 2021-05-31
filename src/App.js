@@ -4,10 +4,11 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Login from "./components/user/Login";
 import { Container } from "reactstrap";
 import Register from "./components/user/Register";
-import Posts from "./components/post/Posts";
 import NewPost from "./components/post/NewPost";
 import MainLayout from "./components/layout/MainLayout";
 import Post from "./components/post/Post";
+import AuthenticatedRoute from "./components/protectedroutes/AuthenticatedRoute";
+import Logout from "./components/user/Logout";
 
 const App = () => {
   return (
@@ -16,12 +17,15 @@ const App = () => {
         <NavBar />
         <Container>
           <Switch>
-            <Route exact path="/" component={MainLayout} />
-            <Route exact path="/post/:id" component={Post} />
-            <Route exact path="/post/create" component={NewPost} />
+            <Route exact path="/login" component={Login} />
+
+            <AuthenticatedRoute exact path="/post/create" component={NewPost} />
+            <AuthenticatedRoute exact path="/post/:id" component={Post} />
             <Route exact path="/login" component={Login} />
             <Route exact path="/register" component={Register} />
+            <Route exact path="/logout" component={Logout} />
           </Switch>
+          <AuthenticatedRoute exact path="/" component={MainLayout} />
         </Container>
       </Router>
     </>

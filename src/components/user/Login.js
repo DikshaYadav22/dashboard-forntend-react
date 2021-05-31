@@ -1,12 +1,15 @@
 import React, { useState } from "react";
-import { Button, Form, FormGroup, Label, Input, FormText } from "reactstrap";
+import { Button, Form, FormGroup, Label, Input } from "reactstrap";
 import axios from "axios";
+import { Redirect, useHistory } from "react-router-dom";
 
 const Login = () => {
+  let history = useHistory();
   const [loginData, setLoginData] = useState({
     email: "",
     password: "",
   });
+
   const { email, password } = loginData;
 
   const loginUser = async () => {
@@ -19,6 +22,7 @@ const Login = () => {
         type: res.data.token_type,
       };
       localStorage.setItem("clientData", JSON.stringify(userData));
+
       setLoginData({
         email: "",
         password: "",
@@ -27,6 +31,10 @@ const Login = () => {
       console.log(res.data);
     }
   };
+  if (localStorage.getItem("clientData")) {
+    history.push("/");
+  }
+
   return (
     <div className="mt-5">
       <Form>
@@ -64,4 +72,5 @@ const Login = () => {
     </div>
   );
 };
+
 export default Login;

@@ -6,14 +6,9 @@ import {
   NavbarBrand,
   Nav,
   NavItem,
-  NavLink,
-  UncontrolledDropdown,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem,
   NavbarText,
 } from "reactstrap";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 
 const NavBar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -30,15 +25,25 @@ const NavBar = () => {
             <NavItem>
               <Link to="/">Home</Link>
             </NavItem>
-            <NavItem>
-              <Link to="/login">Login</Link>
-            </NavItem>
-            <NavItem>
-              <Link to="/register">Register</Link>
-            </NavItem>
-            <NavItem>
-              <Link to="/post/create">Create Post</Link>
-            </NavItem>
+            {!localStorage.getItem("clientData") ? (
+              <>
+                <NavItem>
+                  <Link to="/login">Login</Link>
+                </NavItem>
+                <NavItem>
+                  <Link to="/register">Register</Link>
+                </NavItem>
+              </>
+            ) : (
+              <>
+                <NavItem>
+                  <Link to="/post/create">Create Post</Link>
+                </NavItem>
+                <NavbarText>
+                  <Link to="/logout">Logout</Link>
+                </NavbarText>
+              </>
+            )}
           </Nav>
 
           <NavbarText>Simple Text</NavbarText>
