@@ -8,7 +8,7 @@ import {
   NavItem,
   NavbarText,
 } from "reactstrap";
-import { Link, Redirect } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const NavBar = ({ isLoggedIn }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -22,31 +22,31 @@ const NavBar = ({ isLoggedIn }) => {
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>
           <Nav className="mr-auto" navbar>
-            <NavItem>
-              <Link to="/">Home</Link>
-            </NavItem>
-            {!isLoggedIn ? (
+            {!isLoggedIn ? null : (
               <>
                 <NavItem>
-                  <Link to="/login">Login</Link>
+                  <Link to="/">Home</Link>
                 </NavItem>
-                <NavItem>
-                  <Link to="/register">Register</Link>
-                </NavItem>
-              </>
-            ) : (
-              <>
                 <NavItem>
                   <Link to="/post/create">Create Post</Link>
                 </NavItem>
-                <NavbarText>
-                  <Link to="/logout">Logout</Link>
-                </NavbarText>
               </>
             )}
           </Nav>
-
-          <NavbarText>Simple Text</NavbarText>
+          {!isLoggedIn ? (
+            <>
+              <NavbarText>
+                <Link to="/login">Login /</Link>
+              </NavbarText>
+              <NavbarText>
+                <Link to="/register">Register</Link>
+              </NavbarText>
+            </>
+          ) : (
+            <NavbarText>
+              <Link to="/logout">Logout</Link>
+            </NavbarText>
+          )}
         </Collapse>
       </Navbar>
     </div>

@@ -10,13 +10,30 @@ const NewPost = () => {
     body: "",
     category_id: null,
   });
-
   const [categoriesData, setCategoriesData] = useState([]);
-  let { title, body, category_id } = postsData;
 
+  let { title, body, category_id } = postsData;
   useEffect(() => {
-    getCategories();
+    getUserData();
   }, []);
+
+  const getUserData = async () => {
+    const url = process.env.REACT_APP_AUTH_API;
+    const clientData = localStorage.getItem("clientData");
+    const { token } = JSON.parse(clientData);
+    const headers = {
+      Authorization: `Bearer ${token}`,
+    };
+    const res = await axios.get(`${url}/user`, {
+      headers,
+    });
+    let output = res.data.user_type;
+    if (output == 0) {
+      history.push("/payment");
+    } else {
+      getCategories();
+    }
+  };
 
   const getCategories = async () => {
     const url = process.env.REACT_APP_API;
@@ -36,6 +53,7 @@ const NewPost = () => {
       }
     }
   };
+
   const submitPostsData = async () => {
     const clientData = localStorage.getItem("clientData");
     const { token } = JSON.parse(clientData);
@@ -55,7 +73,6 @@ const NewPost = () => {
       history.push("/");
     }
   };
-
   return (
     <div className="mt-5">
       <Form>
@@ -88,20 +105,21 @@ const NewPost = () => {
         <FormGroup>
           <Label for="category_id">Category</Label>
 
-          <Input type="select" name="category_id" id="category_id">
+          <Input
+            type="select"
+            onChange={(e) =>
+              setPostsData({
+                ...postsData,
+                category_id: e.target.value,
+              })
+            }
+            name="category_id"
+            id="category_id"
+          >
             {categoriesData.length > 0
               ? categoriesData.map((category, index) => {
                   return (
-                    <option
-                      key={index}
-                      onChange={(e) =>
-                        setPostsData({
-                          ...postsData,
-                          category_id: e.target.value,
-                        })
-                      }
-                      value={category.id}
-                    >
+                    <option key={index} value={category.id}>
                       {category.name}
                     </option>
                   );

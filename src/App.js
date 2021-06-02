@@ -9,9 +9,11 @@ import MainLayout from "./components/layout/MainLayout";
 import Post from "./components/post/Post";
 import AuthenticatedRoute from "./components/protectedroutes/AuthenticatedRoute";
 import Logout from "./components/user/Logout";
+import Payment from "./components/payment/Payment";
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+
   useEffect(() => {
     const clientData = localStorage.getItem("clientData");
     if (clientData) {
@@ -48,6 +50,7 @@ const App = () => {
               <MainLayout setIsLoggedIn={(data) => setIsLoggedIn(data)} />
             )}
           />
+          <Route exact path="/payment" component={Payment} />
         </Container>
       </Router>
     </>
